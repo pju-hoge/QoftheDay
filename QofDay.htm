@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question of the Day</title>
+</head>
+<body>
+    <h1>Question of the Day</h1>
+    <p id="question"></p>
+    <button id="generateQuestion">Generate Question</button> <!-- Corrected button ID -->
+</body>
+<script>
+    // Function to generate a random question
+    function generateRandomQuestion() {
+        fetch('QoftheDay.csv')
+            .then(response => response.text())
+            .then(data => {
+                const lines = data.split('\n');
+                const randomIndex = Math.floor(Math.random() * lines.length);
+                const randomQuestion = lines[randomIndex].trim();
+                document.getElementById("question").textContent = randomQuestion;
+            })
+            .catch(error => {
+                console.error('Error loading CSV:', error);
+                document.getElementById("question").textContent = 'Error loading CSV.';
+            });
+    }
+
+    // Event listener for the button click (using the correct button ID)
+    document.getElementById("generateQuestion").addEventListener("click", generateRandomQuestion); <!-- Corrected button ID -->
+</script>
+</html>
